@@ -2,7 +2,9 @@ package co.com.sofka.api;
 
 import co.com.sofka.model.lista.Lista;
 import co.com.sofka.usecase.lista.crearlista.CrearListaUseCase;
+import co.com.sofka.usecase.lista.eliminarlista.EliminarListaUseCase;
 import co.com.sofka.usecase.lista.listarlistas.ListarListasUseCase;
+import co.com.sofka.usecase.lista.obtenerlistaporid.ObtenerListaPorIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -15,14 +17,10 @@ import reactor.core.publisher.Mono;
 public class ListaHandler {
     private final CrearListaUseCase crearListaUseCase;
     private final ListarListasUseCase listarListasUseCase;
-//private  final UseCase useCase;
-//private  final UseCase2 useCase2;
+    private  final EliminarListaUseCase eliminarListaUseCase;
+    private final ObtenerListaPorIdUseCase obtenerListaPorIdUseCase;
 
 
-    /*public Mono<ServerResponse> listenGETOtherUseCase(ServerRequest serverRequest) {
-        // useCase2.logic();
-        return ServerResponse.ok().bodyValue("");
-    }*/
 
     public Mono<ServerResponse> listenPOSTCrearListaUseCase(ServerRequest serverRequest) {
         return serverRequest
@@ -38,5 +36,21 @@ public class ListaHandler {
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(listarListasUseCase.listarTodasLasListas(), Lista.class);
+    }
+
+    public Mono<ServerResponse> listenDELETEliminarListaUseCase(ServerRequest serverRequest){
+        var id = serverRequest.pathVariable("id");
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(eliminarListaUseCase.eliminaerLista(id), Lista.class);
+    }
+
+    public Mono<ServerResponse> listenGETObtenerListaPorIdUseCase(ServerRequest serverRequest) {
+        var id = serverRequest.pathVariable("id");
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(obtenerListaPorIdUseCase.obtenerListaPorId(id), Lista.class);
     }
 }
