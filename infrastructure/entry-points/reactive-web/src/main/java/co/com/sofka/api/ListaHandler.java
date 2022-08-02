@@ -4,6 +4,8 @@ import co.com.sofka.model.lista.Lista;
 import co.com.sofka.usecase.lista.crearlista.CrearListaUseCase;
 import co.com.sofka.usecase.lista.eliminarlista.EliminarListaUseCase;
 import co.com.sofka.usecase.lista.listarlistas.ListarListasUseCase;
+import co.com.sofka.usecase.lista.modificarlista.ModificarListaUseCase;
+import co.com.sofka.usecase.lista.modificartareadelista.ModificarTareaDeListaUseCase;
 import co.com.sofka.usecase.lista.obtenerlistaporid.ObtenerListaPorIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -19,6 +21,7 @@ public class ListaHandler {
     private final ListarListasUseCase listarListasUseCase;
     private  final EliminarListaUseCase eliminarListaUseCase;
     private final ObtenerListaPorIdUseCase obtenerListaPorIdUseCase;
+    private final ModificarListaUseCase modificarListaUseCase;
 
 
 
@@ -52,5 +55,15 @@ public class ListaHandler {
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(obtenerListaPorIdUseCase.obtenerListaPorId(id), Lista.class);
+    }
+
+    public Mono<ServerResponse> listenPUTModificarListaUseCase(ServerRequest serverRequest) {
+        var id = serverRequest.pathVariable("id");
+        return serverRequest
+                .bodyToMono(Lista.class)
+                .flatMap(lista -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(modificarListaUseCase.modificarLista(id,lista), Lista.class));
     }
 }
