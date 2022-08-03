@@ -1,4 +1,4 @@
-package co.com.sofka.mongo;
+package co.com.sofka.mongo.lista;
 
 import co.com.sofka.model.lista.Lista;
 import co.com.sofka.model.lista.gateways.ListaRepository;

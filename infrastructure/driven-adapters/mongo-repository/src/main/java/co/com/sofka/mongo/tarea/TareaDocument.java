@@ -1,21 +1,19 @@
-package co.com.sofka.mongo;
+package co.com.sofka.mongo.tarea;
 
-import co.com.sofka.model.tarea.Tarea;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @Document
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListaDocument {
+public class TareaDocument {
     @Id
     private String id;
-    private String nombre;
-    private List<Tarea> tareas;
+    private String idLista;
+    private String descripcion;
+    private Boolean esCompleta;
 }

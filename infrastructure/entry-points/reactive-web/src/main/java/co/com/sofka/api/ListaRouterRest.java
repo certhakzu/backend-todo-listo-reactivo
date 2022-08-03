@@ -18,7 +18,8 @@ public RouterFunction<ServerResponse> routerFunction(ListaHandler listaHandler) 
             .andRoute(DELETE("/api/eliminarlista/{id}"), listaHandler::listenDELETEliminarListaUseCase) // espera el id de la lista a eliminar en la url
             .andRoute(GET("/api/obtenerlista/{id}"), listaHandler::listenGETObtenerListaPorIdUseCase)
             .andRoute(PUT("/api/modificarlista/{id}"), listaHandler::listenPUTModificarListaUseCase) // espera el id en la url y la lista en el body
-            .andRoute(POST("/api/agregartarea/{id}"), listaHandler::listenPOSTAgregarTareaAListaUseCase); // espera el id de la lista en la url y la tarea a gregar a esta lista en el body
+            .andRoute(POST("/api/agregartarea/{id}"), listaHandler::listenPOSTAgregarTareaAListaUseCase) // espera el id de la lista en la url y la tarea a gregar a esta lista en el body
+            .andRoute(PUT("/api/eliminartarea/{id}"), listaHandler::listenPUTEliminarTareaDeListaUseCase); // espera el id de la lista en la url y la tarea a eliminar en el body
             /*.and(route(GET("/api/otherusercase/path"), listaHandler::listenGETOtherUseCase));*/
 
     }
