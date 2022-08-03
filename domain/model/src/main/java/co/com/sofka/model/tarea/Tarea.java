@@ -11,14 +11,10 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Tarea {
-    private String id;
-    private String idLista;
     private String descripcion;
     private Boolean esCompleta;
 
-    public Tarea(String id, String idLista, String descripcion) {
-        this.id = id; // cuando se cree deberia pasarse idLista+
-        this.idLista = idLista;
+    public Tarea(String descripcion) {
         this.descripcion = descripcion;
         this.esCompleta = false;
     }
@@ -28,11 +24,11 @@ public class Tarea {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tarea tarea = (Tarea) o;
-        return id.equals(tarea.id) && idLista.equals(tarea.idLista) && descripcion.equals(tarea.descripcion) && esCompleta.equals(tarea.esCompleta);
+        return descripcion.equals(tarea.descripcion) && esCompleta.equals(tarea.esCompleta);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, idLista, descripcion, esCompleta);
+        return Objects.hash(descripcion, esCompleta);
     }
 }

@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 public class EliminarListaUseCase {
     private final ListaRepository listaRepository;
 
-    public Mono<Void> eliminaerLista(String id){
+    public Mono<Void> eliminarLista(String id){
         return listaRepository.deleteById(id);
     }
 }

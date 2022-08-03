@@ -5,10 +5,8 @@ import co.com.sofka.model.tarea.Tarea;
 import co.com.sofka.usecase.lista.agregartareaalista.AgregarTareaAListaUseCase;
 import co.com.sofka.usecase.lista.crearlista.CrearListaUseCase;
 import co.com.sofka.usecase.lista.eliminarlista.EliminarListaUseCase;
-import co.com.sofka.usecase.lista.eliminartareadelista.EliminarTareaDeListaUseCase;
 import co.com.sofka.usecase.lista.listarlistas.ListarListasUseCase;
 import co.com.sofka.usecase.lista.modificarlista.ModificarListaUseCase;
-import co.com.sofka.usecase.lista.modificartareadelista.ModificarTareaDeListaUseCase;
 import co.com.sofka.usecase.lista.obtenerlistaporid.ObtenerListaPorIdUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -28,7 +26,6 @@ public class ListaHandler {
     private final ObtenerListaPorIdUseCase obtenerListaPorIdUseCase;
     private final ModificarListaUseCase modificarListaUseCase;
     private  final AgregarTareaAListaUseCase agregarTareaAListaUseCase;
-    private final EliminarTareaDeListaUseCase eliminarTareaDeListaUseCase;
 
 
 
@@ -53,7 +50,7 @@ public class ListaHandler {
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(eliminarListaUseCase.eliminaerLista(id), Lista.class);
+                .body(eliminarListaUseCase.eliminarLista(id), Lista.class);
     }
 
     public Mono<ServerResponse> listenGETObtenerListaPorIdUseCase(ServerRequest serverRequest) {
@@ -84,13 +81,4 @@ public class ListaHandler {
                         .body(agregarTareaAListaUseCase.agregarTareaALista(id, tarea), Lista.class));
     }
 
-    public Mono<ServerResponse> listenPUTEliminarTareaDeListaUseCase(ServerRequest serverRequest){
-        var idLista = serverRequest.pathVariable("id");
-        return serverRequest
-                .bodyToMono(Tarea.class)
-                .flatMap(tarea -> ServerResponse
-                        .ok()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(eliminarTareaDeListaUseCase.eliminarTareaDeLista(idLista, tarea), Lista.class));
-    }
 }
