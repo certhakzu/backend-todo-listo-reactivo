@@ -1,6 +1,8 @@
 package co.com.sofka.api;
 
 import co.com.sofka.model.lista.Lista;
+import co.com.sofka.model.tarea.Tarea;
+import co.com.sofka.usecase.lista.agregartareaalista.AgregarTareaAListaUseCase;
 import co.com.sofka.usecase.lista.crearlista.CrearListaUseCase;
 import co.com.sofka.usecase.lista.eliminarlista.EliminarListaUseCase;
 import co.com.sofka.usecase.lista.listarlistas.ListarListasUseCase;
@@ -14,6 +16,8 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class ListaHandler {
@@ -22,6 +26,7 @@ public class ListaHandler {
     private  final EliminarListaUseCase eliminarListaUseCase;
     private final ObtenerListaPorIdUseCase obtenerListaPorIdUseCase;
     private final ModificarListaUseCase modificarListaUseCase;
+    private  final AgregarTareaAListaUseCase agregarTareaAListaUseCase;
 
 
 
@@ -65,5 +70,15 @@ public class ListaHandler {
                         .ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(modificarListaUseCase.modificarLista(id,lista), Lista.class));
+    }
+
+    public Mono<ServerResponse> listenPOSTAgregarTareaAListaUseCase(ServerRequest serverRequest){
+        var id = serverRequest.pathVariable("id");
+        return serverRequest
+                .bodyToMono(Tarea.class)
+                .flatMap(tarea -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(agregarTareaAListaUseCase.agregarTareaALista(id, tarea), Lista.class));
     }
 }
