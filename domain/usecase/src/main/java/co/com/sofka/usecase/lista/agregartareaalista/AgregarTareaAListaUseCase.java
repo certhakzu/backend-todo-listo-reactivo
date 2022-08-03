@@ -12,12 +12,9 @@ import reactor.core.publisher.Mono;
 public class AgregarTareaAListaUseCase {
     private final ListaRepository listaRepository;
     private final CrearTareaUseCase crearTareaUseCase;
+    private final TareaRepository tareaRepository;
 
     public Mono<Lista> agregarTareaALista(String idLista, Tarea tarea){
-
-        tarea.setIdLista(idLista);
-        crearTareaUseCase.crearTarea(tarea);
-
         return listaRepository.findById(idLista)
                 .map(lista -> {
                     var tareas = lista.getTareas();

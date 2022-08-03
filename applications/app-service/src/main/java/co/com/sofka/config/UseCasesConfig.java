@@ -18,33 +18,8 @@ import reactor.core.publisher.Mono;
         useDefaultFilters = false)
 public class UseCasesConfig {
 
-        @Bean
-        public CrearTareaUseCase getCrearTareaUseCase(){
-                return new CrearTareaUseCase(new TareaRepository() {
-                        @Override
-                        public Mono<Tarea> save(Tarea tarea) {
-                                return null;
-                        }
-
-                        @Override
-                        public Mono<Tarea> findById(String id) {
-                                return null;
-                        }
-
-                        @Override
-                        public Flux<Tarea> findAll() {
-                                return null;
-                        }
-
-                        @Override
-                        public Mono<Tarea> update(String id, Tarea tarea) {
-                                return null;
-                        }
-
-                        @Override
-                        public Mono<Void> deleteById(String id) {
-                                return null;
-                        }
-                })
-        }
+        /*@Bean
+        public CrearTareaUseCase getCrearTareaUseCase(TareaRepository tareaRepository){
+                return new CrearTareaUseCase(tareaRepository);
+        }*/
 }
