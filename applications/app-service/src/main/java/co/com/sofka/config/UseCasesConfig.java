@@ -11,4 +11,9 @@ import org.springframework.context.annotation.FilterType;
         },
         useDefaultFilters = false)
 public class UseCasesConfig {
+
+        /*@Bean
+        public CrearTareaUseCase getCrearTareaUseCase(TareaRepository tareaRepository){
+                return new CrearTareaUseCase(tareaRepository);
+        }*/
 }

@@ -1,4 +1,4 @@
-package co.com.sofka.mongo;
+package co.com.sofka.mongo.lista;
 
 import co.com.sofka.model.tarea.Tarea;
 import lombok.AllArgsConstructor;
@@ -18,4 +18,9 @@ public class ListaDocument {
     private String id;
     private String nombre;
     private List<Tarea> tareas;
+
+    public ListaDocument(String nombre, List<Tarea> tareas) {
+        this.nombre = nombre;
+        this.tareas = tareas;
+    }
 }

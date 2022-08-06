@@ -1,28 +1,84 @@
 package co.com.sofka.api;
 
+import co.com.sofka.model.lista.Lista;
+import co.com.sofka.model.tarea.Tarea;
+import co.com.sofka.usecase.lista.agregartareaalista.AgregarTareaAListaUseCase;
+import co.com.sofka.usecase.lista.crearlista.CrearListaUseCase;
+import co.com.sofka.usecase.lista.eliminarlista.EliminarListaUseCase;
+import co.com.sofka.usecase.lista.listarlistas.ListarListasUseCase;
+import co.com.sofka.usecase.lista.modificarlista.ModificarListaUseCase;
+import co.com.sofka.usecase.lista.obtenerlistaporid.ObtenerListaPorIdUseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class ListaHandler {
-//private  final UseCase useCase;
-//private  final UseCase2 useCase2;
-    public Mono<ServerResponse> listenGETUseCase(ServerRequest serverRequest) {
-        // usecase.logic();
-        return ServerResponse.ok().bodyValue("");
+    private final CrearListaUseCase crearListaUseCase;
+    private final ListarListasUseCase listarListasUseCase;
+    private  final EliminarListaUseCase eliminarListaUseCase;
+    private final ObtenerListaPorIdUseCase obtenerListaPorIdUseCase;
+    private final ModificarListaUseCase modificarListaUseCase;
+    private  final AgregarTareaAListaUseCase agregarTareaAListaUseCase;
+
+
+
+    public Mono<ServerResponse> listenPOSTCrearListaUseCase(ServerRequest serverRequest) {
+        return serverRequest
+                .bodyToMono(Lista.class)
+                .flatMap(lista -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(crearListaUseCase.crearLista(lista), Lista.class));
     }
 
-    public Mono<ServerResponse> listenGETOtherUseCase(ServerRequest serverRequest) {
-        // useCase2.logic();
-        return ServerResponse.ok().bodyValue("");
+    public Mono<ServerResponse> listenGETListarTodasLasListasUseCase(ServerRequest serverRequest) {
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(listarListasUseCase.listarTodasLasListas(), Lista.class);
     }
 
-    public Mono<ServerResponse> listenPOSTUseCase(ServerRequest serverRequest) {
-        // usecase.logic();
-        return ServerResponse.ok().bodyValue("");
+    public Mono<ServerResponse> listenDELETEliminarListaUseCase(ServerRequest serverRequest){
+        var id = serverRequest.pathVariable("id");
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(eliminarListaUseCase.eliminarLista(id), Lista.class);
     }
+
+    public Mono<ServerResponse> listenGETObtenerListaPorIdUseCase(ServerRequest serverRequest) {
+        var id = serverRequest.pathVariable("id");
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(obtenerListaPorIdUseCase.obtenerListaPorId(id), Lista.class);
+    }
+
+    public Mono<ServerResponse> listenPUTModificarListaUseCase(ServerRequest serverRequest) {
+        var id = serverRequest.pathVariable("id");
+        return serverRequest
+                .bodyToMono(Lista.class)
+                .flatMap(lista -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(modificarListaUseCase.modificarLista(id,lista), Lista.class));
+    }
+
+    public Mono<ServerResponse> listenPOSTAgregarTareaAListaUseCase(ServerRequest serverRequest){
+        var id = serverRequest.pathVariable("id");
+        return serverRequest
+                .bodyToMono(Tarea.class)
+                .flatMap(tarea -> ServerResponse
+                        .ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(agregarTareaAListaUseCase.agregarTareaALista(id, tarea), Lista.class));
+    }
+
 }
