@@ -3,7 +3,6 @@ package co.com.sofka.usecase.lista.agregartareaalista;
 import co.com.sofka.model.lista.Lista;
 import co.com.sofka.model.lista.gateways.ListaRepository;
 import co.com.sofka.model.tarea.Tarea;
-import co.com.sofka.model.tarea.gateways.TareaRepository;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 

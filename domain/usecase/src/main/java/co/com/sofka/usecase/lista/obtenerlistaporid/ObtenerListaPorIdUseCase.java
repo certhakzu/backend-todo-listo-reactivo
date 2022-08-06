@@ -10,6 +10,6 @@ public class ObtenerListaPorIdUseCase {
     private final ListaRepository listaRepository;
 
     public Mono<Lista> obtenerListaPorId(String id){
-        return listaRepository.findById(id);
+        return listaRepository.findById(id); //Mockito.Any()
     }
 }

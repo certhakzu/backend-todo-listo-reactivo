@@ -17,6 +17,11 @@ public class Lista {
     private String nombre;
     private List<Tarea> tareas;
 
+    public Lista(String nombre, List<Tarea> tareas) {
+        this.nombre = nombre;
+        this.tareas = tareas;
+    }
+
     public Lista(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
